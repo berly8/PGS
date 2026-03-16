@@ -29,7 +29,7 @@ import { AuthService } from '../../../core/services/auth.service';
       <div class="auth-form-panel">
         <div class="form-wrap">
           <h1>Connexion</h1>
-          <p class="form-sub">Accédez à votre espace</p>
+          <p class="form-sub">Accédez à votre espace !!!</p>
 
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="field">

@@ -100,22 +100,22 @@ interface NavItem {
   `]
 })
 export class SidebarComponent {
-  constructor(public auth: AuthService) {}
+  navItems: NavItem[] = [];
+  roleLabel = '';
+  initials = '';
 
-  get initials(): string {
-    const name = this.auth.currentUser?.fullName || '';
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-  }
+  constructor(public auth: AuthService) {
+    const role = this.auth.role || '';
 
-  get roleLabel(): string {
     const labels: Record<string, string> = {
       ADMIN: 'Administrateur', STUDENT: 'Étudiant',
       COMPANY: 'Entreprise', SUPERVISOR: 'Encadrant'
     };
-    return labels[this.auth.role || ''] || '';
-  }
+    this.roleLabel = labels[role] || '';
 
-  get navItems(): NavItem[] {
+    const name = this.auth.currentUser?.fullName || '';
+    this.initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
     const menus: Record<string, NavItem[]> = {
       ADMIN: [
         { label: 'Tableau de bord', icon: '◈', route: '/admin/dashboard' },
@@ -136,7 +136,7 @@ export class SidebarComponent {
         { label: 'Mes stages', icon: '◎', route: '/supervisor/internships' },
       ],
     };
-    return menus[this.auth.role || ''] || [];
+    this.navItems = menus[role] || [];
   }
 }
 
