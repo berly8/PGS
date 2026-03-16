@@ -15,6 +15,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     boolean existsByStudentIdAndOfferId(Long studentId, Long offerId);
     List<Application> findByOfferCompanyId(Long companyId);
     long countByStatus(Application.ApplicationStatus status);
+    long countByOfferId(Long offerId);
 
     @Query("SELECT COUNT(a) FROM Application a WHERE a.offer.company.id = :companyId")
     long countByCompanyId(Long companyId);

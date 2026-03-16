@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OfferService {
 
     private final InternshipOfferRepository offerRepository;
@@ -108,7 +109,7 @@ public class OfferService {
                 .companyName(offer.getCompany().getCompanyName())
                 .companyLogo(offer.getCompany().getLogo())
                 .createdAt(offer.getCreatedAt())
-                .applicationCount(offer.getApplications().size())
+                .applicationCount((int) applicationRepository.countByOfferId(offer.getId()))
                 .build();
     }
 }

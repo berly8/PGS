@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AdminService {
 
     private final UserRepository userRepository;
