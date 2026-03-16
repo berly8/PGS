@@ -173,15 +173,18 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        if (err.status === 0) {
-          this.errorMessage = 'Serveur inaccessible. Vérifiez que le backend tourne sur le port 8080.';
+        if (err.name === 'TimeoutError') {
+          this.errorMessage = 'Le serveur met trop de temps à répondre. Vérifiez que le backend est lancé.';
+        } else if (err.status === 0) {
+          this.errorMessage = 'Impossible de contacter le serveur. Vérifiez que le backend tourne sur le port 8080.';
         } else if (err.status === 401 || err.status === 403) {
           this.errorMessage = 'Email ou mot de passe incorrect.';
-        } else if (err.name === 'TimeoutError') {
-          this.errorMessage = 'Le serveur met trop de temps à répondre.';
+        } else if (err.status >= 500) {
+          this.errorMessage = 'Erreur serveur. Consultez les logs du backend.';
         } else {
           this.errorMessage = err.error?.message || 'Une erreur est survenue.';
         }
+        console.error('Login error:', err);
       }
     });
   }
